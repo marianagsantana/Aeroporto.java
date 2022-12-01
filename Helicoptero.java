@@ -1,60 +1,33 @@
-import.java.util.ArrayList;
-import.java.util.List;
-
-private class Helicoptero{
-    private String modelo;
-    private String marca;
+class Helicoptero{
+    private String prefixoHelicptero;
     private String cor;
-    private int ano;
-    private int capacidade;
-    private int id;
-    private int idCompanhia;
-    private int idHangar;
-    private int idPista;
-    private Companhia companhia;
-    private Hangar hangar;
-    private Pista pista;
-    private List<Voo> voos = new ArrayList<>();
 
-    public Helicoptero(
-        String modelo,
-        String marca,
-        String cor,
-        int ano,
-        int capacidade,
-        Companhia companhia,
-        Hangar hangar,
-        Pista pista
-    ) {
-        this.modelo = modelo;
-        this.marca = marca;
+    public Helicoptero(String prefixoHelicptero, String cor) {
+        this.prefixoHelicptero = prefixoHelicptero;
         this.cor = cor;
-        this.ano = ano;
-        this.capacidade = capacidade;
-        this.companhia = companhia;
-        this.hangar = hangar;
-        this.pista = pista;
-        this.idCompanhia = companhia.id;
-        this.idHangar = hangar.id;
-        this.idPista = pista.id;
-        this.id = Helicoptero.helicopteros.size() + 1;
+    }
 
-        companhia.helicopteros.add(this);
-        hangar.helicopteros.add(this);
-        pista.helicopteros.add(this);
+    public String getPrefixoHelicptero() {
+        return prefixoHelicptero;
+    }
 
-        Helicoptero.helicopteros.add(this);
+    public void setPrefixoHelicptero(String prefixoHelicptero) {
+        this.prefixoHelicptero = prefixoHelicptero;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
     @Override
+
     public String toString() {
-        return "Modelo: " + this.modelo
-            + "\nMarca: " + this.marca
-            + "\nCor: " + this.cor
-            + "\nAno: " + this.ano
-            + "\nCapacidade: " + this.capacidade
-            + "\nCompanhia: " + this.companhia.nome
-            + "\nHangar: " + this.hangar.nome
-            + "\nPista: " + this.pista.nome;
+        return "Helicoptero{" + "prefixoHelicptero=" + prefixoHelicptero + ", cor=" + cor + '}';
     }
+
 }
+

@@ -1,50 +1,64 @@
-package Aeroporto.java;
 
-private class Voo {
+ class Voo {
 
     private String origem;
     private String destino;
     private String data;
     private String hora;
-    private int id;
-    private int idAviao;
-    private int idHelicoptero;
-    private Aviao aviao;
-    private Helicoptero helicoptero;
+    private String numVoo;
 
-    public Voo(String origem, String destino, String data, String hora, Aviao aviao) {
+    public Voo(String origem, String destino, String data, String hora, String numVoo) {
         this.origem = origem;
         this.destino = destino;
         this.data = data;
         this.hora = hora;
-        this.aviao = aviao;
-        this.idAviao = aviao.id;
-        this.id = Voo.voos.size() + 1;
-        aviao.voos.add(this);
-        Voo.voos.add(this);
+        this.numVoo = numVoo;
     }
 
-    public Voo(String origem, String destino, String data, String hora, Helicoptero helicoptero) {
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(String origem) {
         this.origem = origem;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
         this.destino = destino;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
         this.data = data;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
         this.hora = hora;
-        this.helicoptero = helicoptero;
-        this.idHelicoptero = helicoptero.id;
-        this.id = Voo.voos.size() + 1;
-        helicoptero.voos.add(this);
-        Voo.voos.add(this);
+    }
+
+    public String getNumero() {
+        return numVoo;
+    }
+
+    public void setNumero(String numVoo) {
+        this.numVoo = numVoo;
     }
 
     @Override
+
     public String toString() {
-        return "Origem: " + this.origem
-            + "\nDestino: " + this.destino
-            + "\nData: " + this.data
-            + "\nHora: " + this.hora;
+        return "Voo{" + "origem=" + origem + ", destino=" + destino + ", data=" + data + ", hora=" + hora + ", numVoo=" + numVoo + '}';
     }
 
 }
-
-
-

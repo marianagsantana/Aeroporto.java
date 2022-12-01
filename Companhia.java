@@ -1,22 +1,33 @@
-import.java.util.ArrayList;
-import.java.util.List;
 
-private class Companhia {
+
+class Companhia {
     private String nome;
     private String pais;
-    private int id;
-    private List<Aviao> avioes = new ArrayList<>();
 
     public Companhia(String nome, String pais) {
         this.nome = nome;
         this.pais = pais;
-        this.id = Companhia.companhias.size() + 1;
-        Companhia.companhias.add(this);
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     @Override
+
     public String toString() {
-        return "Nome: " + this.nome
-            + "\nPais: " + this.pais;
+        return "Companhia{" + "nome=" + nome + ", pais=" + pais + '}';
     }
 }

@@ -1,22 +1,33 @@
-import.java.util.ArrayList;
-import.java.util.List;
 
-private class Hangar {
-    private String nome;
+
+ class Hangar {
     private String cidade;
-    private int id;
-    private List<Aviao> avioes = new ArrayList<>();
+    private String capacidade;
 
-    public Hangar(String nome, String cidade) {
-        this.nome = nome;
+    public Hangar(String cidade, String capacidade) {
         this.cidade = cidade;
-        this.id = Hangar.hangares.size() + 1;
-        Hangar.hangares.add(this);
+        this.capacidade = capacidade;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(String capacidade) {
+        this.capacidade = capacidade;
     }
 
     @Override
+
     public String toString() {
-        return "Nome: " + this.nome
-            + "\nCidade: " + this.cidade;
+        return "Hangar{" + "cidade=" + cidade + ", capacidade=" + capacidade + '}';
     }
-} 
+}

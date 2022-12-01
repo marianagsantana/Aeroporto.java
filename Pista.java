@@ -1,26 +1,52 @@
-package Aeroporto.java;
 
-private class Pista {
-    private String nome;
+class Pista {
     private String cidade;
-    private int id;
-    private List<Aviao> avioes = new ArrayList<>();
-    private List<Helicoptero> helicopteros = new ArrayList<>();
+    private String estado;
+    private String pais;
+    private String numPista;
 
-    public Pista(String nome, String cidade) {
-        this.nome = nome;
+    public Pista(String cidade, String estado, String pais, String numPista) {
         this.cidade = cidade;
-        this.id = Pista.pistas.size() + 1;
-        Pista.pistas.add(this);
+        this.estado = estado;
+        this.pais = pais;
+        this.numPista = numPista;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getNumero() {
+        return numPista;
+    }
+
+    public void setNumero(String numPista) {
+        this.numPista = numPista;
     }
 
     @Override
+
     public String toString() {
-        return "Nome: " + this.nome
-            + "\nCidade: " + this.cidade;
+        return "Pista{" + "cidade=" + cidade + ", estado=" + estado + ", pais=" + pais + ", numero=" + numPista + '}';
     }
-    
 }
-
-Compare this snippet from Aeroporto.java\Voo.java:
-
