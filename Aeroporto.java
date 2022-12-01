@@ -98,7 +98,7 @@ do{
             Companhia companhia = new Companhia(nome, pais);
             System.out.println("Companhia cadastrada com sucesso!");
             break;
-
+//
         case 6:
             System.out.println("Digite o numero da pista: ");
             String numPista = entrada.next();
