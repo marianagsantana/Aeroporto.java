@@ -6,19 +6,23 @@ public class Hangar {
     private String local;
     private Aviao aviao;
     private int idAviao;
-    
+
     public Hangar() {
 
     }
 
-    public Hangar(int id, String local, int idAviao) throws Exception {
+    public Hangar(int id, String local, int idAviao, Aviao aviao) throws Exception {
         this.id = id;
         this.local = local;
         this.idAviao = idAviao;
+        this.aviao = aviao;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO hangar (id, local, aviao_id) VALUES (" + id + "," + local + "," + idAviao + ");"
+        "INSERT INTO hangar (id, local, aviao_id) VALUES (?, ?, ?);"
         );
+        stmt.setInt(1, id);
+        stmt.setString(2, local);
+        stmt.setInt(3, idAviao);
         stmt.execute();
         stmt.close();
     }
@@ -29,8 +33,10 @@ public class Hangar {
         this.aviao = aviao;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO hangar (local, aviao_id) VALUES (" + local + "," + idAviao + ");"
+            "INSERT INTO hangar (local, aviao_id) VALUES (?, ?);"
         );
+        stmt.setString(1, local);
+        stmt.setInt(2, idAviao);
         stmt.execute();
         stmt.close();
     }
@@ -51,20 +57,20 @@ public class Hangar {
         return local;
     }
 
-    public void setIdAviao(int idAviao) {
-        this.idAviao = idAviao;
-    }
-
-    public int getIdAviao() {
-        return idAviao;
-    }
-
     public void setAviao(Aviao aviao) {
         this.aviao = aviao;
     }
 
     public Aviao getAviao() {
         return aviao;
+    }
+
+    public void setIdAviao(int idAviao) {
+        this.idAviao = idAviao;
+    }
+
+    public int getIdAviao() {
+        return idAviao;
     }
 
     @Override

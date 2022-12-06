@@ -6,7 +6,6 @@ public class Aviao extends Aeronave{
     private NumeroGeneric<String, Integer> prefixo;
     private Companhia companhia;
     private int idCompanhia;
-    
 
     public Aviao() {
 
@@ -16,24 +15,37 @@ public class Aviao extends Aeronave{
         super(id, marca, modelo);
         this.prefixo = new NumeroGeneric<String,Integer>(letra, numero);
         this.capacidade = capacidade;
-        this.idCompanhia = idCompanhia;     
-        
+        this.idCompanhia = idCompanhia;   
+        this.companhia = companhia;   
+
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO aviao (marca, modelo, prefixo, capacidade, companhia_id) VALUES (" + id + "," + marca + "," + modelo + "," + prefixo + "," + capacidade + "," + idCompanhia + ");"
+            "INSERT INTO aviao (id, marca, modelo, prefixo, capacidade, companhia_id) VALUES (?, ?, ?, ?, ?, ?);"
         );
+        stmt.setInt(1, id);
+        stmt.setString(2, marca);
+        stmt.setString(3, modelo);
+        stmt.setString(4, letra);
+        stmt.setInt(5, numero);
+        stmt.setInt(6, idCompanhia);
         stmt.execute();
         stmt.close();
     }
 
-    public Aviao(String marca, String modelo, String letra, int numero, int capacidade, int idCompanhia) throws Exception {
+    public Aviao(String marca, String modelo, String letra, int numero, int capacidade, Companhia companhia, int idCompanhia) throws Exception {
         super(marca, modelo);
-        this.prefixo = new NumeroGeneric<String,Integer>(letra, numero);
         this.capacidade = capacidade;
+        this.prefixo = new NumeroGeneric<String,Integer>(letra, numero);
         this.idCompanhia = idCompanhia;
-
+        this.companhia = companhia;  
+    
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO aviao (marca, modelo, prefixo, capacidade, companhia_id) VALUES (" + marca + "," + modelo + "," + prefixo + "," + capacidade + "," + idCompanhia + ");"
+            "INSERT INTO aviao (marca, modelo, prefixo, capacidade, companhia_id) VALUES (?, ?, ?, ?, ?);"
         );
+        stmt.setString(1, marca);
+        stmt.setString(2, modelo);
+        stmt.setString(3, prefixo.toString());
+        stmt.setInt(4, capacidade);
+        stmt.setInt(5, idCompanhia);
         stmt.execute();
         stmt.close();
     }
@@ -47,7 +59,7 @@ public class Aviao extends Aeronave{
     }
 
     public void setPrefixo(String letra, int numero) {
-        this.prefixo = prefixo;;
+        this.prefixo = new NumeroGeneric<String,Integer>(letra, numero);
     }
 
     public NumeroGeneric<String,Integer> getPrefixo() {
@@ -72,7 +84,11 @@ public class Aviao extends Aeronave{
 
     @Override
     public String toString() {
-        return "Id: " + super.getId() + " Marca: " + super.getMarca() + " Modelo: " + super.getModelo() + " Prefixo: " + prefixo + " Capacidade: " + capacidade + " Companhia: " + idCompanhia;
+        return "Id: " + super.getId() + " | Marca: " + super.getMarca() + " | Modelo: " + super.getModelo() + " | Prefixo: " + getPrefixo() + " | Capacidade: " + getCapacidade() + " | Companhia: " + getCompanhia();
+    }
+
+    public static Aviao getById(int id) {
+        return new Aviao();
     }
     
 }

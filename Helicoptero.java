@@ -15,8 +15,13 @@ public class Helicoptero extends Aeronave{
         this.cor = cor;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO helicoptero (id, marca, modelo, cor, capacidade) VALUES (" + id + "," + marca + "," + modelo + "," + cor + "," + capacidade + ");"
+            "INSERT INTO helicoptero (id, marca, modelo, cor, capacidade) VALUES (?, ?, ?, ?, ?);"
         );
+        stmt.setInt(1, id);
+        stmt.setString(2, marca);
+        stmt.setString(3, modelo);
+        stmt.setString(4, cor);
+        stmt.setInt(5, capacidade);
         stmt.execute();
         stmt.close();
     }
@@ -27,8 +32,12 @@ public class Helicoptero extends Aeronave{
         this.cor = cor;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO helicoptero (marca, modelo, cor, capacidade) VALUES (" + marca + "," + modelo + "," + cor + "," + capacidade + ");"
+            "INSERT INTO helicoptero (marca, modelo, cor, capacidade) VALUES (?, ?, ?, ?);"
         );
+        stmt.setString(1, marca);
+        stmt.setString(2, modelo);
+        stmt.setString(3, cor);
+        stmt.setInt(4, capacidade);
         stmt.execute();
         stmt.close();
     }
@@ -49,7 +58,7 @@ public class Helicoptero extends Aeronave{
         return cor;
     }
 
-   
+    
     @Override
     public String toString() {
         return "Id: " + getId() + " | Marca: " + getMarca() + " | Modelo: " + getModelo() + " | Cor: " + getCor() + " | Capacidade: " + getCapacidade();
@@ -61,10 +70,6 @@ public class Helicoptero extends Aeronave{
             return heli.getId() == getId();
         }
         return false;
-    }
-
-    public static Helicoptero getById(int id) {
-        return new Helicoptero();
     }
 
 }

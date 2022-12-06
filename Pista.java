@@ -2,30 +2,33 @@ import java.sql.PreparedStatement;
 
 public class Pista {
     
-    private NumeroGeneric<Character, Integer> numero;
+    private NumeroGeneric<String, Integer> numeroPista;
     private int id;
-    
+
     public Pista() {
 
     }
 
-    public Pista(int id, Character letra, int num) throws Exception {
+    public Pista(int id, String letra, int numero) throws Exception {
         this.id = id;
-        this.numero = new NumeroGeneric<Character,Integer>(letra, num);
+        this.numeroPista = new NumeroGeneric<String,Integer>(letra, numero);
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO pista (id, numero) VALUES (" + id + "," + numero + ");"
+            "INSERT INTO pista (id, numero) VALUES (?, ?);"
         );
+        stmt.setInt(1, id);
+        stmt.setString(2, numeroPista.toString());
         stmt.execute();
         stmt.close();
     }
 
-    public Pista(Character letra, int num) throws Exception {
-        this.numero = new NumeroGeneric<Character,Integer>(letra, num);
+    public Pista(String letra, int numero) throws Exception {
+        this.numeroPista = new NumeroGeneric<String,Integer>(letra, numero);
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO pista (numero) VALUES (" + numero + ");"
+            "INSERT INTO pista (numero) VALUES (?);"
         );
+        stmt.setString(1, numeroPista.toString());
         stmt.execute();
         stmt.close();
     }
@@ -38,17 +41,17 @@ public class Pista {
         return id;
     }
 
-    public void setNumero(Character letra, int num) {
-        this.numero = numero;
+    public void setNumero(String letra, int numero) {
+        this.numeroPista = new NumeroGeneric<String,Integer>(letra, numero);
     }
 
-    public NumeroGeneric<Character,Integer> getNumero() {
-        return numero;
+    public NumeroGeneric<String,Integer> getNumero() {
+        return numeroPista;
     }
 
     @Override
     public String toString() {
-        return "Id: " + id + " | Numero: " + numero;
+        return "Id: " + id + " | Numero: " + numeroPista;
     }
 
     public boolean equals(Object obj) {

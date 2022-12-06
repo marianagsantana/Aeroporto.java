@@ -2,43 +2,45 @@ import java.sql.PreparedStatement;
 
 public class Jato extends Aeronave{
     
-    private String cor;
+    
     private int velocidade;
-   
+    private String cor;
+
     public Jato() {
 
     }
 
-    public Jato(int id, String marca, String modelo, String cor, int velocidade) throws Exception {
+    public Jato(int id, String marca, String modelo, int velocidade, String cor) throws Exception {
         super(id, marca, modelo);
-        this.cor = cor;
         this.velocidade = velocidade;
+        this.cor = cor;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO jato (id, marca, modelo, cor, velocidade) VALUES (" + id + "," + marca + "," + modelo + "," + cor + "," + velocidade + ");"
+            "INSERT INTO jato (id, marca, modelo, cor, velocidade) VALUES (?, ?, ?, ?, ?);"
         );
+        stmt.setInt(1, id);
+        stmt.setString(2, marca);
+        stmt.setString(3, modelo);
+        stmt.setString(4, cor);
+        stmt.setInt(5, velocidade);
         stmt.execute();
         stmt.close();
     }
 
-    public Jato(String marca, String modelo, String cor, int velocidade) throws Exception {
+    public Jato(String marca, String modelo, int velocidade, String cor) throws Exception {
         super(marca, modelo);
-        this.cor = cor;
         this.velocidade = velocidade;
+        this.cor = cor;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO jato (marca, modelo, cor, velocidade) VALUES (" + marca + "," + modelo + "," + cor + "," + velocidade + ");"
+            "INSERT INTO jato (marca, modelo, cor, velocidade) VALUES (?, ?, ?, ?);"
         );
+        stmt.setString(1, marca);
+        stmt.setString(2, modelo);
+        stmt.setString(3, cor);
+        stmt.setInt(4, velocidade);
         stmt.execute();
         stmt.close();
-    }
-
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
-
-    public String getCor() {
-        return cor;
     }
 
     public void setVelocidade(int velocidade) {
@@ -47,6 +49,14 @@ public class Jato extends Aeronave{
 
     public int getVelocidade() {
         return velocidade;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public String getCor() {
+        return cor;
     }
 
     @Override
@@ -62,7 +72,4 @@ public class Jato extends Aeronave{
         return false;
     }
 
-    public static Jato getById(int id) {
-        return new Jato();
-    }
 }

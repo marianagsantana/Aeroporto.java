@@ -1,7 +1,7 @@
 public abstract class Aeronave {
     
     private int id;
-    private String marca;
+    protected String marca;
     private String modelo;
 
     public Aeronave() {
@@ -51,16 +51,14 @@ public abstract class Aeronave {
     public boolean equals(Object obj) { 
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Aeronave aeronave = (Aeronave) obj;
-        if (this.id == aeronave.id && this.marca.equals(aeronave.marca) && this.modelo.equals(aeronave.modelo)) {
+        Aeronave aeromodelo = (Aeronave) obj;
+        if (this.id == aeromodelo.id && this.marca.equals(aeromodelo.marca) && this.modelo.equals(aeromodelo.modelo)) {
             return true;
         }
         return false;
     }
 
     public static Aeronave getById(int id) {
-        return new Aeronave() {
-
-        };
+        return new Aeronave() {};
     }
 }

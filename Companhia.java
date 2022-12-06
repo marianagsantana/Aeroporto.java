@@ -16,8 +16,11 @@ public class Companhia {
         this.cnpj = cnpj;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO companhia (id, nome, cnpj) VALUES (" + id + "," + nome + "," + cnpj +");"
+            "INSERT INTO companhia (id, nome, cnpj) VALUES (?, ?, ?);"
         );
+        stmt.setInt(1, id);
+        stmt.setString(2, nome);
+        stmt.setString(3, cnpj);
         stmt.execute();
         stmt.close();
     }
@@ -27,8 +30,10 @@ public class Companhia {
         this.cnpj = cnpj;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO companhia (nome, cnpj) VALUES (" + nome + "," + cnpj +");"
+            "INSERT INTO companhia (nome, cnpj) VALUES (?, ?);"
         );
+        stmt.setString(1, nome);
+        stmt.setString(2, cnpj);
         stmt.execute();
         stmt.close();
     } 
