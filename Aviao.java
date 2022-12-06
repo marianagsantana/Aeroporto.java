@@ -1,60 +1,78 @@
-import.java.util.ArrayList;
-import.java.util.List;
+import java.sql.PreparedStatement;
 
-private class Aviao{
-    private String modelo;
-    private String marca;
-    private String cor;
-    private int ano;
+public class Aviao extends Aeronave{
+
     private int capacidade;
-    private int id;
-    private int idCompanhia;
-    private int idHangar;
-    private int idPista;
+    private NumeroGeneric<String, Integer> prefixo;
     private Companhia companhia;
-    private Hangar hangar;
-    private Pista pista;
-    private List<Voo> voos = new ArrayList<>();
+    private int idCompanhia;
+    
 
-    public Aviao(
-        String modelo,
-        String marca,
-        String cor,
-        int ano,
-        int capacidade,
-        Companhia companhia,
-        Hangar hangar,
-        Pista pista
-    ) {
-        this.modelo = modelo;
-        this.marca = marca;
-        this.cor = cor;
-        this.ano = ano;
+    public Aviao() {
+
+    }
+
+    public Aviao(int id, String marca, String modelo, String letra, int numero, int capacidade, int idCompanhia) throws Exception {
+        super(id, marca, modelo);
+        this.prefixo = new NumeroGeneric<String,Integer>(letra, numero);
         this.capacidade = capacidade;
+        this.idCompanhia = idCompanhia;     
+        
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "INSERT INTO aviao (marca, modelo, prefixo, capacidade, companhia_id) VALUES (" + id + "," + marca + "," + modelo + "," + prefixo + "," + capacidade + "," + idCompanhia + ");"
+        );
+        stmt.execute();
+        stmt.close();
+    }
+
+    public Aviao(String marca, String modelo, String letra, int numero, int capacidade, int idCompanhia) throws Exception {
+        super(marca, modelo);
+        this.prefixo = new NumeroGeneric<String,Integer>(letra, numero);
+        this.capacidade = capacidade;
+        this.idCompanhia = idCompanhia;
+
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "INSERT INTO aviao (marca, modelo, prefixo, capacidade, companhia_id) VALUES (" + marca + "," + modelo + "," + prefixo + "," + capacidade + "," + idCompanhia + ");"
+        );
+        stmt.execute();
+        stmt.close();
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public int getCapacidade() {
+        return capacidade;
+    }
+
+    public void setPrefixo(String letra, int numero) {
+        this.prefixo = prefixo;;
+    }
+
+    public NumeroGeneric<String,Integer> getPrefixo() {
+        return prefixo;
+    }
+
+    public void setIdCompanhia(int idCompanhia) {
+        this.idCompanhia = idCompanhia;
+    }
+
+    public int getIdCompanhia() {
+        return idCompanhia;
+    }
+
+    public void setCompanhia(Companhia companhia) {
         this.companhia = companhia;
-        this.hangar = hangar;
-        this.pista = pista;
-        this.idCompanhia = companhia.id;
-        this.idHangar = hangar.id;
-        this.idPista = pista.id;
-        this.id = Aviao.avioes.size() + 1;
+    }
 
-        companhia.avioes.add(this);
-        hangar.avioes.add(this);
-        pista.avioes.add(this);
-
-        Aviao.avioes.add(this);
+    public Companhia getCompanhia() {
+        return companhia;
     }
 
     @Override
     public String toString() {
-        return "Modelo: " + this.modelo
-            + "\nMarca: " + this.marca
-            + "\nCor: " + this.cor
-            + "\nAno: " + this.ano
-            + "\nCapacidade: " + this.capacidade
-            + "\nCompanhia: " + this.companhia.nome
-            + "\nHangar: " + this.hangar.nome
-            + "\nPista: " + this.pista.nome;
+        return "Id: " + super.getId() + " Marca: " + super.getMarca() + " Modelo: " + super.getModelo() + " Prefixo: " + prefixo + " Capacidade: " + capacidade + " Companhia: " + idCompanhia;
     }
+    
 }

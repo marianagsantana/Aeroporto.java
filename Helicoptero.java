@@ -1,60 +1,70 @@
-import.java.util.ArrayList;
-import.java.util.List;
+import java.sql.PreparedStatement;
 
-private class Helicoptero{
-    private String modelo;
-    private String marca;
-    private String cor;
-    private int ano;
+public class Helicoptero extends Aeronave{
+    
     private int capacidade;
-    private int id;
-    private int idCompanhia;
-    private int idHangar;
-    private int idPista;
-    private Companhia companhia;
-    private Hangar hangar;
-    private Pista pista;
-    private List<Voo> voos = new ArrayList<>();
+    private String cor;
 
-    public Helicoptero(
-        String modelo,
-        String marca,
-        String cor,
-        int ano,
-        int capacidade,
-        Companhia companhia,
-        Hangar hangar,
-        Pista pista
-    ) {
-        this.modelo = modelo;
-        this.marca = marca;
-        this.cor = cor;
-        this.ano = ano;
-        this.capacidade = capacidade;
-        this.companhia = companhia;
-        this.hangar = hangar;
-        this.pista = pista;
-        this.idCompanhia = companhia.id;
-        this.idHangar = hangar.id;
-        this.idPista = pista.id;
-        this.id = Helicoptero.helicopteros.size() + 1;
+    public Helicoptero() {
 
-        companhia.helicopteros.add(this);
-        hangar.helicopteros.add(this);
-        pista.helicopteros.add(this);
-
-        Helicoptero.helicopteros.add(this);
     }
 
+    public Helicoptero(int id, String marca, String modelo, int capacidade, String cor) throws Exception {
+        super(id, marca, modelo);
+        this.capacidade = capacidade;
+        this.cor = cor;
+
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "INSERT INTO helicoptero (id, marca, modelo, cor, capacidade) VALUES (" + id + "," + marca + "," + modelo + "," + cor + "," + capacidade + ");"
+        );
+        stmt.execute();
+        stmt.close();
+    }
+
+    public Helicoptero(String marca, String modelo, int capacidade, String cor) throws Exception {
+        super(marca, modelo);
+        this.capacidade = capacidade;
+        this.cor = cor;
+
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "INSERT INTO helicoptero (marca, modelo, cor, capacidade) VALUES (" + marca + "," + modelo + "," + cor + "," + capacidade + ");"
+        );
+        stmt.execute();
+        stmt.close();
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public int getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+   
     @Override
     public String toString() {
-        return "Modelo: " + this.modelo
-            + "\nMarca: " + this.marca
-            + "\nCor: " + this.cor
-            + "\nAno: " + this.ano
-            + "\nCapacidade: " + this.capacidade
-            + "\nCompanhia: " + this.companhia.nome
-            + "\nHangar: " + this.hangar.nome
-            + "\nPista: " + this.pista.nome;
+        return "Id: " + getId() + " | Marca: " + getMarca() + " | Modelo: " + getModelo() + " | Cor: " + getCor() + " | Capacidade: " + getCapacidade();
     }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof Helicoptero) {
+            Helicoptero heli = (Helicoptero) obj;
+            return heli.getId() == getId();
+        }
+        return false;
+    }
+
+    public static Helicoptero getById(int id) {
+        return new Helicoptero();
+    }
+
 }

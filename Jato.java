@@ -1,60 +1,68 @@
-import.java.util.ArrayList;
-import.java.util.List;
+import java.sql.PreparedStatement;
 
-private class Jato{
-    private String modelo;
-    private String marca;
+public class Jato extends Aeronave{
+    
     private String cor;
-    private int ano;
-    private int capacidade;
-    private int id;
-    private int idCompanhia;
-    private int idHangar;
-    private int idPista;
-    private Companhia companhia;
-    private Hangar hangar;
-    private Pista pista;
-    private List<Voo> voos = new ArrayList<>();
+    private int velocidade;
+   
+    public Jato() {
 
-    public Jato(
-        String modelo,
-        String marca,
-        String cor,
-        int ano,
-        int capacidade,
-        Companhia companhia,
-        Hangar hangar,
-        Pista pista
-    ) {
-        this.modelo = modelo;
-        this.marca = marca;
+    }
+
+    public Jato(int id, String marca, String modelo, String cor, int velocidade) throws Exception {
+        super(id, marca, modelo);
         this.cor = cor;
-        this.ano = ano;
-        this.capacidade = capacidade;
-        this.companhia = companhia;
-        this.hangar = hangar;
-        this.pista = pista;
-        this.idCompanhia = companhia.id;
-        this.idHangar = hangar.id;
-        this.idPista = pista.id;
-        this.id = Jato.jatos.size() + 1;
+        this.velocidade = velocidade;
 
-        companhia.jatos.add(this);
-        hangar.jatos.add(this);
-        pista.jatos.add(this);
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "INSERT INTO jato (id, marca, modelo, cor, velocidade) VALUES (" + id + "," + marca + "," + modelo + "," + cor + "," + velocidade + ");"
+        );
+        stmt.execute();
+        stmt.close();
+    }
 
-        Jato.jatos.add(this);
+    public Jato(String marca, String modelo, String cor, int velocidade) throws Exception {
+        super(marca, modelo);
+        this.cor = cor;
+        this.velocidade = velocidade;
+
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "INSERT INTO jato (marca, modelo, cor, velocidade) VALUES (" + marca + "," + modelo + "," + cor + "," + velocidade + ");"
+        );
+        stmt.execute();
+        stmt.close();
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setVelocidade(int velocidade) {
+        this.velocidade = velocidade;
+    }
+
+    public int getVelocidade() {
+        return velocidade;
     }
 
     @Override
     public String toString() {
-        return "Modelo: " + this.modelo
-            + "\nMarca: " + this.marca
-            + "\nCor: " + this.cor
-            + "\nAno: " + this.ano
-            + "\nCapacidade: " + this.capacidade
-            + "\nCompanhia: " + this.companhia.nome
-            + "\nHangar: " + this.hangar.nome
-            + "\nPista: " + this.pista.nome;
+        return "Id: " + getId() + " | Marca: " + getMarca() + " | Modelo: " + getModelo() + " | Cor: " + getCor() + " | Velocidade: " + getVelocidade();
+    }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof Jato) {
+            Jato jato = (Jato) obj;
+            return jato.getId() == getId() && jato.getMarca().equals(getMarca()) && jato.getModelo().equals(getModelo()) && jato.getCor().equals(getCor()) && jato.getVelocidade() == getVelocidade();
+        }
+        return false;
+    }
+
+    public static Jato getById(int id) {
+        return new Jato();
     }
 }
